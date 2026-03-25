@@ -1,70 +1,29 @@
 public class PalindromeCheckerApp {
 
-    // Node class for Linked List
-    static class Node {
-        char data;
-        Node next;
+    // Recursive function to check palindrome
+    public static boolean isPalindrome(String word, int start, int end) {
 
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-
-    // Function to check palindrome using linked list
-    public static boolean isPalindrome(String word) {
-
-        // Convert string to linked list
-        Node head = new Node(word.charAt(0));
-        Node current = head;
-
-        for (int i = 1; i < word.length(); i++) {
-            current.next = new Node(word.charAt(i));
-            current = current.next;
+        // Base condition
+        if (start >= end) {
+            return true;
         }
 
-        // Find middle using fast and slow pointer
-        Node slow = head;
-        Node fast = head;
-
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
+        // If characters don't match
+        if (word.charAt(start) != word.charAt(end)) {
+            return false;
         }
 
-        // Reverse second half
-        Node prev = null;
-        Node curr = slow;
-
-        while (curr != null) {
-            Node next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-
-        // Compare both halves
-        Node firstHalf = head;
-        Node secondHalf = prev;
-
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data) {
-                return false;
-            }
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
-
-        return true;
+        // Recursive call
+        return isPalindrome(word, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
 
         System.out.println("=== Palindrome Checker App ===");
 
-        String word = "madam";
+        String word = "racecar";
 
-        if (isPalindrome(word)) {
+        if (isPalindrome(word, 0, word.length() - 1)) {
             System.out.println(word + " is a Palindrome.");
         } else {
             System.out.println(word + " is NOT a Palindrome.");
