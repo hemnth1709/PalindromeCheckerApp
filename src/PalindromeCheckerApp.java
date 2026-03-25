@@ -1,36 +1,43 @@
-public class PalindromeCheckerApp {
+import java.util.Stack;
 
-    // Function to check palindrome ignoring spaces and case
-    public static boolean isPalindrome(String input) {
+class PalindromeChecker {
 
-        // Normalize string: remove spaces and convert to lowercase
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+    // Method to check palindrome
+    public boolean checkPalindrome(String word) {
 
-        int start = 0;
-        int end = normalized.length() - 1;
+        Stack<Character> stack = new Stack<>();
 
-        // Two-pointer comparison
-        while (start < end) {
-            if (normalized.charAt(start) != normalized.charAt(end)) {
+        // Push characters into stack
+        for (int i = 0; i < word.length(); i++) {
+            stack.push(word.charAt(i));
+        }
+
+        // Compare with original string
+        for (int i = 0; i < word.length(); i++) {
+            if (word.charAt(i) != stack.pop()) {
                 return false;
             }
-            start++;
-            end--;
         }
 
         return true;
     }
+}
+
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         System.out.println("=== Palindrome Checker App ===");
 
-        String text = "Never Odd Or Even";
+        String word = "madam";
 
-        if (isPalindrome(text)) {
-            System.out.println("\"" + text + "\" is a Palindrome (ignoring spaces and case).");
+        // Create object of PalindromeChecker
+        PalindromeChecker checker = new PalindromeChecker();
+
+        if (checker.checkPalindrome(word)) {
+            System.out.println(word + " is a Palindrome.");
         } else {
-            System.out.println("\"" + text + "\" is NOT a Palindrome.");
+            System.out.println(word + " is NOT a Palindrome.");
         }
     }
 }
